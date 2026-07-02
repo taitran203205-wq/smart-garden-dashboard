@@ -1,0 +1,5 @@
+{
+  "name": "DC Motor",
+  "author": "Fenton",
+  "pins": ["+", "-"]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Adapter 5V",
+  "author": "Fenton",
+  "pins": ["VOUT", "GND"]
+}

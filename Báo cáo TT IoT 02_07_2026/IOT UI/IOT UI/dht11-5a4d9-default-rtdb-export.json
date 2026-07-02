@@ -1,0 +1,38 @@
+{
+  "smartGarden": {
+    "data": {
+      "AnhSang": 28.3,
+      "AnhSangLux": 28.3,
+      "DoAm": 72.5,
+      "NhietDo": 32.1,
+      "counter": 305,
+      "status": "online",
+      "uptime": 1678496
+    },
+    "devices": {
+      "fan": {
+        "mode": "MANUAL_OFF",
+        "on": 0,
+        "reason": "Quat da tat bang nut tren dashboard",
+        "value": 0
+      },
+      "lamp": {
+        "mode": "AUTO",
+        "on": 1,
+        "reason": "Anh sang duoi 700 lux nen den LED dang bat",
+        "value": 100
+      },
+      "pump": {
+        "mode": "AUTO",
+        "on": 1,
+        "reason": "Do am duoi 75 phan tram nen may bom dang bat",
+        "value": 100
+      }
+    },
+    "manual": {
+      "fanDisabled": true,
+      "lampDisabled": false,
+      "pumpDisabled": false
+    }
+  }
+}

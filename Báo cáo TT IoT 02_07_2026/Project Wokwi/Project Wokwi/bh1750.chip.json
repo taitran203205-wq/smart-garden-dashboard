@@ -1,0 +1,5 @@
+{
+  "name": "BH1750 Light Sensor",
+  "author": "Fenton",
+  "pins": ["VCC", "GND", "SDA", "SCL", "ADDR"]
+}

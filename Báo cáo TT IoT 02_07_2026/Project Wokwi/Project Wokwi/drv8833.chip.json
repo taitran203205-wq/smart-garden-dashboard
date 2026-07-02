@@ -1,0 +1,5 @@
+{
+  "name": "DRV8833 Motor Driver",
+  "author": "Fenton",
+  "pins": ["VM", "GND", "STBY", "AIN1", "AIN2", "AO1", "AO2"]
+}

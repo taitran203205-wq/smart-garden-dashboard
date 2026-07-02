@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng điều khiển vườn thông minh</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main class="app">
+    <header>
+      <div class="logo-box">
+        <div class="logo-icon">🌿</div>
+        <h1>TTT</h1>
+      </div>
+
+      <div class="hero">
+        <h2>🌿 DỰ ÁN - BẢNG ĐIỀU KHIỂN VƯỜN THÔNG MINH</h2>
+        <p>DHT22 + BH1750 • Firebase Realtime Database • Điều khiển tự động</p>
+      </div>
+    </header>
+
+    <section id="notice" class="notice warning">
+      <div>
+        <h2 id="noticeTitle">Đang chờ dữ liệu từ ESP32...</h2>
+        <p id="noticeText">ESP32 sẽ đọc DHT22, BH1750 rồi gửi dữ liệu thật lên Firebase.</p>
+      </div>
+      <span id="firebaseStatus" class="badge warning-text">ĐANG KẾT NỐI</span>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="card sensor-card">
+        <div class="card-title">🔬 DỮ LIỆU CẢM BIẾN</div>
+
+        <div class="sensor-item">
+          <img src="image/hot.gif" alt="Nhiệt độ">
+          <div class="sensor-info">
+            <h3>Nhiệt độ</h3>
+            <p id="temp">-- °C</p>
+          </div>
+          <span id="tempStatus" class="badge">--</span>
+        </div>
+
+        <div class="sensor-item">
+          <img src="image/water.gif" alt="Độ ẩm">
+          <div class="sensor-info">
+            <h3>Độ ẩm</h3>
+            <p id="hum">-- %</p>
+          </div>
+          <span id="humStatus" class="badge">--</span>
+        </div>
+
+        <div class="sensor-item">
+          <img src="image/sun.gif" alt="Ánh sáng">
+          <div class="sensor-info">
+            <h3>Ánh sáng</h3>
+            <p id="light">-- lux</p>
+          </div>
+          <span id="lightStatus" class="badge">--</span>
+        </div>
+      </div>
+
+      <div class="card device-card device-control-card">
+        <div class="card-title">🎛️ DEVICE CONTROL</div>
+
+        <div class="device-item device-control-item">
+          <div class="device-icon">
+            <img src="image/windmill.gif" alt="Ventilation Fan">
+          </div>
+
+          <div class="device-info">
+            <h3>Ventilation Fan</h3>
+            <p id="fanReason">Tự bật khi nhiệt độ vượt ngưỡng.</p>
+          </div>
+
+          <div class="device-actions">
+            <div class="device-buttons">
+              <button id="fanOn" class="device-btn on-btn" onclick="setManual('fan', false)">ON</button>
+              <button id="fanOff" class="device-btn off-btn" onclick="setManual('fan', true)">OFF</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="device-item device-control-item">
+          <div class="device-icon">
+            <img src="image/drop.gif" alt="Irrigation Pump">
+          </div>
+
+          <div class="device-info">
+            <h3>Irrigation Pump</h3>
+            <p id="pumpReason">Tự bật khi độ ẩm thấp hơn ngưỡng.</p>
+          </div>
+
+          <div class="device-actions">
+            <div class="device-buttons">
+              <button id="pumpOn" class="device-btn on-btn" onclick="setManual('pump', false)">ON</button>
+              <button id="pumpOff" class="device-btn off-btn" onclick="setManual('pump', true)">OFF</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="device-item device-control-item">
+          <div class="device-icon">
+            <img src="image/lamp.gif" alt="Grow Light">
+          </div>
+
+          <div class="device-info">
+            <h3>Grow Light</h3>
+            <p id="lampReason">Tự bật khi ánh sáng thấp hơn ngưỡng.</p>
+          </div>
+
+          <div class="device-actions">
+            <div class="device-buttons">
+              <button id="lampOn" class="device-btn on-btn" onclick="setManual('lamp', false)">ON</button>
+              <button id="lampOff" class="device-btn off-btn" onclick="setManual('lamp', true)">OFF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card video-card">
+        <div class="card-title">📹 VIDEO MÔ PHỎNG</div>
+        <div class="video-box">
+          <video controls autoplay muted loop playsinline preload="metadata">
+            <source src="image/greenhouse.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ phát video.
+          </video>
+        </div>
+      </div>
+
+      <div class="card image-card">
+        <div class="card-title">🖼️ HÌNH ẢNH MINH HỌA</div>
+
+        <div class="plant-art">
+          <div class="sun"></div>
+          <div class="pot"></div>
+          <div class="stem stem-1"></div>
+          <div class="stem stem-2"></div>
+          <div class="stem stem-3"></div>
+          <div class="leaf leaf-1"></div>
+          <div class="leaf leaf-2"></div>
+          <div class="leaf leaf-3"></div>
+          <div class="leaf leaf-4"></div>
+          <div class="leaf leaf-5"></div>
+          <div class="leaf leaf-6"></div>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="card-title">📈 BIỂU ĐỒ ĐƯỜNG</div>
+        <div class="chart-note">Ánh sáng trên biểu đồ = lux / 10</div>
+        <div class="chart-box">
+          <canvas id="lineChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="card-title">📊 BIỂU ĐỒ CỘT</div>
+        <div class="chart-note">So sánh giá trị hiện tại</div>
+        <div class="chart-box">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <div class="card-title">🍃 BIỂU ĐỒ TRÒN</div>
+        <div class="chart-note">Tỉ lệ môi trường hiện tại</div>
+        <div class="chart-box">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card student-card">
+        <div class="student-block">
+          <div class="student-name">🌿 TRẦN TIẾN TÀI</div>
+          <div class="student-id">23161183</div>
+
+          <div class="student-name">🌿 PHÙNG THỊ BẢO TRÂM</div>
+          <div class="student-id">23161201</div>
+        </div>
+
+        <div class="mini-clock">
+          <b id="time">--:--:--</b>
+          <span id="date">--/--/----</span>
+        </div>
+
+        <div class="good-note">🍃 Hệ thống vườn thông minh tự động</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyAblgTrqAxJ69v-zw8Y0tCcvhMzFLfaFoE",
+      authDomain: "dht11-5a4d9.firebaseapp.com",
+      databaseURL: "https://dht11-5a4d9-default-rtdb.firebaseio.com",
+      projectId: "dht11-5a4d9",
+      storageBucket: "dht11-5a4d9.firebasestorage.app",
+      messagingSenderId: "1083832029534",
+      appId: "1:1083832029534:web:ae77375232c80e39ec3fcf"
+    });
+  </script>
+
+  <script src="function.js?v=201"></script>
+</body>
+</html>
